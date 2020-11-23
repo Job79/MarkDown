@@ -45,7 +45,7 @@ if [[ -v directory && -v output ]]; then # handle directory inputs
     find "$directory" -type f | while read file; do
         if [[ "$file" == *.md ]]; then
             title="$(basename "${file}" .md)"
-            generated_output="$(generate_html "$(cat "${file}" | $markdown_tool)")"
+            generated_output="$(generate_html "$(cat "${file}" | $markdown_tool | grep "[^.*]")")"
             output_file="$output/$(echo "$file" | sed -e "s:^"$directory"::; s:\.[^./]*$::g").html"
             mkdir -p "$(dirname "$output_file")"
             echo "$generated_output" > "$output_file"
@@ -58,9 +58,9 @@ if [[ -v directory && -v output ]]; then # handle directory inputs
     exit
 elif [ -v markdown_files ]; then # handle file inputs
     title="$(basename "${markdown_files%% *}" .md)"
-    generated_output="$(generate_html "$(cat "${markdown_files[@]}" | $markdown_tool)")"
+    generated_output="$(generate_html "$(cat "${markdown_files[@]}" | $markdown_tool | grep "[^.*]")")"
 elif test ! -t 0; then # handle STDIN
-    generated_output="$(generate_html "$($markdown_tool <&0)")"
+    generated_output="$(generate_html "$($markdown_tool <&0 | grep "[^.*]")")"
 fi
 
 # PROCESS OUTPUT
