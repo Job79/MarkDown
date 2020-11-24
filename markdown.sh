@@ -7,7 +7,7 @@ generate_html() {
     if [ -z "$1" ]; then echo "no input provided"; exit 1; fi
 
     if [ -v directory ]; then
-        relative_path="$(echo "$file" | sed "s:^"$directory"::; s:[^\/]*\/:..\/:g; s:[^\/]*$::")style.css"
+        relative_path="$(echo "$file" | sed "s:^"$directory/"::; s:[^\/]*\/:..\/:g; s:[^\/]*$::")style.css"
         head="<link rel=\"stylesheet\" href=\"$relative_path\">"
     else head="<style>$(cat "$css")</style>"; fi
 
@@ -32,10 +32,10 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # LOAD DEFAULTS / PREPARE VARIABLES
-markdown_tool="markdown"
+markdown_tool="cmark-gfm"
 dir="$(dirname "$(realpath "$0")")"
 if [ ! -v html ]; then html="$(cat "$dir/template.html")"; fi
-if [ ! -v css ]; then css="$dir/style_min.css"; fi 
+if [ ! -v css ]; then css="$dir/style.css"; fi 
 
 # PROCESS INPUT 
 if [[ -v directory && -v output ]]; then # handle directory inputs
@@ -45,7 +45,7 @@ if [[ -v directory && -v output ]]; then # handle directory inputs
     find "$directory" -type f | while read file; do
         if [[ "$file" == *.md ]]; then
             title="$(basename "${file}" .md)"
-            generated_output="$(generate_html "$(cat "${file}" | $markdown_tool | grep "[^.*]")")"
+            generated_output="$(generate_html "$(cat "${file}" | $markdown_tool)")"
             output_file="$output/$(echo "$file" | sed -e "s:^"$directory"::; s:\.[^./]*$::g").html"
             mkdir -p "$(dirname "$output_file")"
             echo "$generated_output" > "$output_file"
@@ -58,9 +58,9 @@ if [[ -v directory && -v output ]]; then # handle directory inputs
     exit
 elif [ -v markdown_files ]; then # handle file inputs
     title="$(basename "${markdown_files%% *}" .md)"
-    generated_output="$(generate_html "$(cat "${markdown_files[@]}" | $markdown_tool | grep "[^.*]")")"
+    generated_output="$(generate_html "$(cat "${markdown_files[@]}" | $markdown_tool)")"
 elif test ! -t 0; then # handle STDIN
-    generated_output="$(generate_html "$($markdown_tool <&0 | grep "[^.*]")")"
+    generated_output="$(generate_html "$($markdown_tool <&0)")"
 fi
 
 # PROCESS OUTPUT

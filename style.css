@@ -23,12 +23,15 @@ body {
 
 a, a:active, a:visited {
     color: #587;
-    font-weight: bold;
     text-decoration: none;
 }
 
 ::selection {
     background: #8865;
+}
+
+ol > li::marker {
+  font-weight: bold;
 }
 
 hr {
@@ -51,6 +54,7 @@ blockquote, code, td, th {
 }
 
 blockquote {
+    font-style: italic;
     border-left: 3px solid #464;
 }
 
