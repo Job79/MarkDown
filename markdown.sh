@@ -32,10 +32,11 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # LOAD DEFAULTS / PREPARE VARIABLES
-markdown_tool="cmark-gfm"
+markdown_tool="cmark-gfm --unsafe -e table"
 dir="$(dirname "$(realpath "$0")")"
 if [ ! -v html ]; then html="$(cat "$dir/template.html")"; fi
 if [ ! -v css ]; then css="$dir/style.css"; fi 
+if [ -v directory ]; then directory="$(echo "$directory" | sed "s/\/$//")"; fi 
 
 # PROCESS INPUT 
 if [[ -v directory && -v output ]]; then # handle directory inputs

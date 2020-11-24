@@ -1,5 +1,5 @@
 html {
-    background: #333;
+    background: #444;
     color: #fec;
 }
 
@@ -10,9 +10,13 @@ html {
     }
 }
 
-body {
+body{
+    margin: 0;
+}
+
+main {
     font: 1.1em/1.3 sans-serif;
-    background: #5551;
+    background: #7772;
 
     position: absolute;
     right: 0;left: 0;
@@ -27,7 +31,7 @@ a, a:active, a:visited {
 }
 
 ::selection {
-    background: #8865;
+    background: #9985;
 }
 
 ol > li::marker {
@@ -36,13 +40,13 @@ ol > li::marker {
 
 hr {
     border: none;
-    height: 4px;
+    height: 5px;
     background: #464;
 }
 
 pre code, blockquote, img {
     display: block;
-    margin: 1em auto;
+    margin: 0 auto;
     max-width: 100%;
     border-radius: 4px;
     overflow-x: auto;
@@ -55,7 +59,7 @@ blockquote, code, td, th {
 
 blockquote {
     font-style: italic;
-    border-left: 3px solid #464;
+    border-left: 4px solid #464;
 }
 
 table {
