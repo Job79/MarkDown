@@ -73,3 +73,28 @@ td{
 th{
  background: #0004
 }
+
+nav{
+ padding: 5px 0;
+ font-size: 1.1em;
+ border-bottom: 2px solid #464
+}
+
+nav a,nav a:active,nav a:visited{
+ color: inherit
+}
+
+nav ul{
+ float: right;
+ display: flex;
+ margin: 0
+}
+
+nav li{
+ display: inline;
+ padding: 0 10px 
+}
+
+nav ul li:not(:first-child){
+ border-left: 2px solid #464
+}
